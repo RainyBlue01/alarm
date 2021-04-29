@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>综合报警管理系统</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css" >
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="../css/bootstrap-theme.min.css" >
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="../js/jquery-3.1.1.min.js"  ></script>
+  <script src="../js/bootstrap.min.js"  ></script>
+  <script src="../js/laydate/laydate.js"></script>
+  <script src="../js/moment.js"></script>
+</head>
+<body id = "bordy">
+<div class="boyda">
+  <table  class="table">
+    <thead class="thead-nan">
+    <tr>
+      <td >序号</td>
+      <td>发生时间</td>
+      <td>状态</td>
+      <td>报警类型</td>
+      <td>设备位置</td>
+      <td>确认时间</td>
+    </tr>
+    </thead>
+    <tbody id="tbody" class="tbody-wa">
+    </tbody>
+  </table>
+  <div id="sendasda">
+    <div id="pagesaadas" style="display: inline-block;height: 76px;display: inline-block;line-height: 76px;position: relative; top: -29px;margin-left: 10px;margin-right: 10px; color: #b2e5ff;">
+
+    </div>
+    <nav aria-label="Page navigation" style="display: inline-block;">
+      <ul class="pagination pagination-sm" id="page">
+      </ul>
+    </nav>
+    <div style="display: inline-block;position:relative;top: -30px;" >
+      <span class="el-pagination__jump">前往
+        <div class="el-input el-pagination__editor is-in-pagination">
+          <input style="width: 40px;" id="applyCertNum" type="number"  min="1" max="99999" class="el-input__inner">
+        </div>页
+      </span>
+    </div>
+  </div>
+</div>
+</body>
+<style>
+  .layui-laydate-list{
+    background-color: #000 !important;
+  }
+  .dropdown-menu a:hover{
+    background:#666 !important;
+  }
+  .layui-laydate-content td.laydate-selected {
+    background-color: #666 !important;
+  }
+  .close {
+    color: #fff !important;
+    opacity: 1 !important;
+  }
+  .modal-content {
+    border: 1px solid #03ffea;
+  }
+  .layui-laydate-content td{
+    color: #6dfef5 !important;
+  }
+  .layui-laydate-content .laydate-day-next, .layui-laydate-content .laydate-day-prev{
+    color: #666 !important;
+  }
+  .laydate-footer-btns span{
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+  .red{
+    color:red !important;
+  }
+  .yellow{
+    color:yellow !important;
+  }
+  .green{
+    color: yellowgreen !important;
+  }
+  .modal-dialog{
+    margin: 200px auto
+  }
+  .el-pagination__jump {
+    margin-left: 24px;
+    font-weight: 400;
+    color: #b2e5ff;
+  }
+  .el-pagination__editor {
+    display: inline-block;
+    line-height: 18px;
+    padding: 0 2px;
+    height: 28px;
+    text-align: center;
+    margin: 0 2px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 3px;
+  }
+
+  .el-pagination__editor.el-input .el-input__inner {
+    height: 28px;
+  }
+  .el-pagination__jump .el-input__inner {
+    padding: 0 3px;
+  }
+  .el-pagination .el-input__inner {
+    text-align: center;
+    -moz-appearance: textfield;
+    line-height: normal;
+  }
+  .el-input__inner {
+    -webkit-appearance: none;
+    background-color: #fff;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #606266;
+    display: inline-block;
+    font-size: inherit;
+    height: 40px;
+    line-height: 40px;
+    outline: 0;
+    padding: 0 15px;
+    -webkit-transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    width: 100%;
+  }
+  .el-pagination__editor.el-input .el-input__inner {
+    height: 28px;
+  }
+  .el-pagination__jump .el-input__inner {
+    padding: 0 3px;
+  }
+  .modal-content {
+    color: #b2e5ff;
+    position: relative;
+    background-color: #000;
+  }
+  html::-webkit-scrollbar {display:none}
+  .coa{
+    width: 200px;
+    height:34px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #fff;
+  }
+  #bordy{
+    position: relative;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    background-image: url(./img/grid-1.png);
+  }
+  #tbody{
+    color: #fff;
+  }
+  .hedeData-img {
+    width: 200px;
+    text-align: center;
+    padding-top: 20px;
+    background: url(data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAABkAAD/4QMvaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzOCA3OS4xNTk4MjQsIDIwMTYvMDkvMTQtMDE6MDk6MDEgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAyMDE3IChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBRDY3QzA4RTA5RkIxMUVCOTU1NkYyRUJGMUY3MzhFQyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBRDY3QzA4RjA5RkIxMUVCOTU1NkYyRUJGMUY3MzhFQyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkFENjdDMDhDMDlGQjExRUI5NTU2RjJFQkYxRjczOEVDIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkFENjdDMDhEMDlGQjExRUI5NTU2RjJFQkYxRjczOEVDIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQICAgICAgICAgICAwMDAwMDAwMDAwEBAQEBAQECAQECAgIBAgIDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMD/8AAEQgARgABAwERAAIRAQMRAf/EAFkAAQEBAQAAAAAAAAAAAAAAAAAGAQoBAQAAAAAAAAAAAAAAAAAAAAAQAAIABAcAAAAAAAAAAAAAAAABEVGRAqHREpJTBBURAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO/gAAAAAAGRU1VATfoqawAj9XZ4791mYH//2Q==);
+    font-size: 14px;
+  }
+  .hedeData-message{
+    position: absolute;
+    top: 10px;
+    right: -19px;
+    width: 30px;
+    height: 15px;
+    line-height: 15px;
+    border-radius: 10px;
+    background-color: #eb5757;
+    color: #fff;
+    font-size: 12px;
+    padding-left: 4px;
+  }
+  .hedeData-other-img {
+    position: relative;
+  }
+  .hedeData-other  div {
+    color: #ecf8ff;
+    padding-left: 35px;
+    cursor: pointer;
+  }
+  .hedeData-other{
+    font-size: 14px;
+    margin-left: auto;
+    color: #ecf8ff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    line-height: 70px;
+    padding-right: 52px;
+    color: #1286cc;
+  }
+  .hedeData {
+    position: fixed;
+    top:0;
+    height: 70px;
+    width: 100%;
+    z-index: 99;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+
+    background: #1187cc url(./img/bg.jpg) no-repeat;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.1);
+  }
+  .boyda{
+    margin-top: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .table-a{
+    display: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .form-coa{
+    color: #fff  !important;
+    background-color: #151a24;
+    display: inline-block !important;
+    width:200px
+  }
+  .btn-box{
+    margin-left: 90%;
+    height: 40px;
+  }
+  .ttt{
+    float: right;
+    margin-right: 20px;
+  }
+  .table-top{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 67%;
+    display: inline-block;
+  }
+  .btn{
+    margin-left: 10px;
+  }
+  .bbnt{
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #03ffea;
+    color: #03ffea;
+    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    outline: none;
+  }
+  .bbnta{
+    width: 47px;
+    height: 23px;
+    border-radius: 3px;
+    border: 1px solid #03ffea;
+    color: #03ffea;
+    margin-right: 10px;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  button:after {
+    border: 0 !important;
+  }
+  .lh{
+    display: inline-block;
+    margin-left: 10px;
+  }
+  .thead-nan{
+    color: #6dfef5;
+    border-left:1px solid #172234 !important;
+    border-right:1px solid #172234 !important;
+  }
+  .thead-nan tr td{
+    text-align: center;
+    box-shadow: inset 0 0 3px  #172234;
+  }
+  .tbody-wa{
+    background-color:rgba(3,255,234,0.1);
+    color: #6dfef5;
+    border-left:1px solid #172234 !important;
+    border-right:1px solid #172234 !important;
+  }
+  .tbody-wa tr td{
+    text-align: center;
+    color: #b2e5ff;
+    border-top:1px solid #172234 !important;
+    box-shadow: inset 0 0 3px  #172234;
+  }
+  .tbody-wa tr:nth-of-type(2n){
+    background-color:rgba(3,255,234,0.3);
+
+  }
+  .table-inline{
+    text-align: center;
+    color: #6dfef5;
+  }
+  .dropdown{
+    display: inline-block;
+    width: 200px;
+    height: 34px;
+  }
+  .pagination>li>a, .pagination>li>span{
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #b2e5ff;;
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #ddd;
+  }
+  .layui-laydate{
+    background-color: #000;
+    color: #b2e5ff;
+  }
+  .dropdown-menu{
+    background-color: #000;
+    color: #b2e5ff;
+  }
+  .active{
+    border: 1px solid #1187cc;
+  }
+  .dropdown-menu>li>a{
+    background-color: #000;
+    color: #b2e5ff!important;
+  }
+</style>
+<style>
+  #msg{
+    width:266px;
+    position: fixed;
+    z-index:999;
+    top: 49%;
+    margin-top:-80px;
+    left:50%;
+    margin-left:-133px;
+    background:#000;
+    font-size:17px;
+    color:#b2e5ff;
+    text-align: center;
+    line-height: 2rem;
+    display:inline-block;
+    padding-bottom:20px;
+    border-radius:2px;
+  }
+  #msg_top{
+    background:#000;
+    padding:5px 15px 5px 20px;
+    text-align:left;
+    border-bottom: 1px solid  #6dfef5;
+  }
+  #msg_top span{
+    font-size:22px;
+    float:right;
+    cursor:pointer;
+  }
+  #msg_cont{
+    padding:15px 20px 20px;
+    text-align:center;
+  }
+  #msg_clear{
+    width: 60px;
+    display:inline-block;
+    font-size: 12px;
+  }
+</style>
+
+<script>
+  var total =1
+  function previous (){
+    if(parseInt(total ) > 1){
+      total = parseInt(total )- 1
+    }
+    var htmls =''
+    htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+    htmls+="<li id='"+total+"'><a>"+total+"</a></li>"
+    htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+    $('#page').html(htmls);
+    search()
+  }
+  function pageOn(adsssa){
+    if(parseInt(total ) < pages){
+      total = adsssa
+
+      var htmls =''
+      htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+      htmls+="<li id='"+total+"'><a>"+total+"</a></li>"
+      htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+      $('#page').html(htmls);
+      search()
+    }
+  }
+  function next (){
+    if(parseInt(total ) < pages){
+      total = parseInt(total ) + 1
+    }
+    var htmls =''
+    htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+    htmls+="<li id='"+total+"'><a>"+total+"</a></li>"
+    htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+    $('#page').html(htmls);
+    search()
+  }
+  function clear (){
+    document.getElementById("test6").value ='';
+    console.log(document.getElementById("test6").value)
+    $('#search').hide();
+  }
+
+  function getParameter(name) {
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+    var r = window.location.search.substr(1).match(reg)
+    if (r != null) return unescape(r[2])
+    return null
+  }
+  function search(){
+
+    let equipmentNumber = getParameter('equipmentNumber') // 123456
+    let a = {
+      pageNo:total,
+      pageSize:10,
+      equipmentNumber : equipmentNumber,
+    }
+
+    console.log(a)
+    $.ajax({
+      url:"/alarm/alarms/getEquipmentNumber",
+      type:'get',
+      dataType:'json',
+      data:a,
+      success:function (data) {
+        var htmls = "共有"+ data.data.pages +"页"
+        $('#pagesaadas').html(htmls);
+        tabledata = data.data.list
+        pages = data.data.pages
+        var html="";
+        data.data.list.map((v,index)=>{
+          v.pm = (total-1)*10 +index+1
+          if(v.confirmTime === null){
+          html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td>"+v.status+"</td><td>"+v.alarmType+"</td><td >"+v.deviceLocation+"</td><td></td></tr>";
+
+        }else{
+          html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td>"+v.status+"</td><td>"+v.alarmType+"</td><td >"+v.deviceLocation+"</td><td>"+v.confirmTime+"</td></tr>";
+
+        }
+      })
+        $('#tbody').html(html);
+      }
+    });
+  }
+
+  $(function () {
+    search()
+    var htmls =''
+    htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+    htmls+="<li id='"+total+"'><a>"+total+"</a></li>"
+    htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+    $('#page').html(htmls);
+  })
+</script>
+</html>

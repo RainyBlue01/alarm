@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>综合报警管理系统</title>
+  <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css" >
+
+  <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+  <link rel="stylesheet" href="./css/bootstrap-theme.min.css" >
+  <link rel="stylesheet" href="./css/index.css" >
+  <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+  <script src="./js/jquery-3.1.1.min.js"  ></script>
+  <script src="./js/bootstrap.min.js"  ></script>
+  <script src="./js/laydate/laydate.js"></script>
+  <script src="./js/moment.js"></script>
+  <script type="text/javascript" src="./echart/echarts.js"></script>
+</head>
+<body id = "bordy">
+<div  class="hedeData">
+  <div  class="hedeData-text" style="width: 475px;">
+  </div>
+  <div  class="hedeData-other">
+    <div  class="hedeData-date" id='headdate'></div>
+    <!-- <div  class="hedeData-other-img">
+      <span class="iconfont icondingbu-xiaoxi2">信息</span>
+      <span  class="hedeData-message">99+</span> -->
+    <!-- </div> -->
+    <!-- <div  class="hedeData-other-img">
+      <span  class="iconfont icondingbu-guanyu">关于</span></div>
+    </div> -->
+    <!-- <div ><img style="margin-right: 5px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAFb0lEQVRYhb2Za2xTZRjHf+f0rOu6dd3WbVjH7mOwEIc60KEiDCOCCARFJjcTE5MRbho/GAyGD2i8JJoYRS5CjB8gm6KJ8QYxCiSICkMSlduYKIMuxd3YOtqul3Pqh9PuUrpy3gn8vzTt+zzv/9e355znfZ9KXQMRxiAZmAbUAVOBSqAASI+Oe4F24DxwAjgENAOaqJEkCDgeWAusAAoFvS4De4EPAZfRJKOADmAL8DxgFgSLVxDYDWwGum8UbARwKfq3zv2fYPHqAtYBnyYLkpOMKcD26AQ3G47onE1RD2W0oNFW0BoFe+IWgCXSN0A94IsfSLSCCtDI7YMj6tVIgpVMBLgVWHiriRJoYdR7hOIB64GG24KTWA3AsuEfDL8GHcA5bs0NIaIeYBLQCSN/89cRhItENI7/fJSfDv9Iy5nTdHd1IkkyzoIC7n9gBvMXP0V2jkMUMAd4DVgNQytYBPwFpBidxef18sbmjZw99eeoMZZUC0tWPMvCJfWYTCYRyBBQAVyKAb4JbBSZYdfW9zjw9ZeGYkvLK3j08QVc7elhyfKVKIqhdXgLeEXqGojIQBt6nTUkv89Lw8qleL1eoymD2t34hdGf3QUUx3YlhuH6PR42vrBmTHCyLJOenmE0fDwwTQZmi5h8tucTXJfaRNkA0DSNkyeOiaTUyUCNSMbJ5iGDNPOoJfQ6SZL+evDAdyJ2U2VgokiGp68XAJvVwvYNC1gzdzL59rSkOROcdmZO1q+ilrNnROwmKoBTJCOmZx6pYdw4J/MdDuZMq+LsP+2cvPAvFzv76fIMoJhkCnMzuK8in9q7Kujwmzh8qglNU0VsnApgE8mwWNLweb3MqC4HQFbMpGbmc/eUfKonB9DCQSJqCJCQTQqy2Yokmyi0gdVixmYTsrMZv4iiKiwqwtN7lbys6+9GWUlFVlJHzc2zZ1AzvVbITwb6DQcP9LJp8b2UOnOETGJy5mayamoeSs/fRlP6ZcBtNFoKB7GlmXlxqdCTaVDrnpyJxZyCFA4aTXHLQIvRaDUjn0DpDEpKy8cE6LDbCBTVEsqrNJrSIgO/iZioNieq/U5hOAA1PRc1qwikZEehETohox+qhRTOKRMxGZknpkMycByBgzRAJMVK2FEh5KRZc1CzhM76LqBZRm9H7BFyA4LOajSrsc1oREklUDQdkEQs9gBabD84HriAYNdAUkOYXccx9bWPGqNZ7ASLp6OlZopMHQTKAVfsQnKhtyOEFDGlECh+kKDNSdjvGawiETWEGrhGyGRhYMIcUTiAj6NMI051hnolCZVViGRSCPZ34O9uI9DnRlPDkFM8tI0xrm7g1dgbJW5gHfoB2pBCaoRznT46rgRYYLZiMlshEhmE+uGKRKbsoyo/DZNx0A0MW6hErY8dJDkbB8Ia+89f5fvWXo62efCH9ZbfLIeP9SW9TMoI4A4o7GzLYp9b3xjYUk3MLrPzWGU2dWX2ZLAfxXsnAjQD+4jrLngCKruar9D0Ryd9A0JbphG6w2ZmxZQ8Vt2TjzVlxLP0K+Bp9BskKSDozaPPgXkhNcLe3zvZ9qub3oHwmMHilWtNYW2tk/rqXBRZ+ha9zXdd8yhZfzDldIfvg5f3X2xo7fbfNLB4TcpL2/n23JL1VXnWUKLxZPUq9M6R9tWt3f5l6M3Gm60uYPm5Tv/qd4+0J4SD5IBsW1TOrDJ7E1CFfvMY3iclUTA6VxXQOK8ym+2LRi+bN2wBR4Adx9y8/4sbVYuMR38UrUTv6ouoHb18bQVcZpPESw8V8FzNuKQF0HCXv7Xbz5aDlzl2uR+G/oaYjX5srUQvl7FzwDX0SnAefTt3kGF/QzxcksmmukJKsy039P0PuzC1glu4dHoAAAAASUVORK5CYII=">系统管理员 </div> -->
+  </div>
+</div>
+<div class="boyda">
+  <div id="Statistics" style="margin-left: 30px; display: none;">   
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> 年
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 半年
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 季
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4"> 月
+    </label>
+    <label class="radio-inline" style="margin-right: 30px;">
+      <input type="radio" name="inlineRadioOptions" id="inlineRadio5" value="option5"> 周
+    </label>
+    <input type="text" class="form-coa form-control" placeholder="日期时间" id="time1" style="width: 300px;height:35px;">
+    <button  class="bntSearch" >搜&nbsp;索</button>
+  </div>
+  <div class="table-top"  style="margin-right: 30px;">
+    <button id="all" type="button" class="bbnt">全部报警 </button>
+    <button id="before" type="button" class="bbnt">待确认报警</button>
+    <button id="begin" type="button" class="bbnt">正在报警</button>
+    <button id="after" type="button" class="bbnt">历史查询</button>
+    <div class="btn-group">
+      <button type="button" style="background: rgba(0,0,0,0);width:20px; height: 35px; border-radius: 5px;border:0px solid #0980c7; color: #0980c7; margin-left: 10px;" class="form-coa coa" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="glyphicon glyphicon-menu-hamburger" style="color: #0980c7;"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a href="#"  onclick='analysis()'>报警数据统计分析</a></li>
+        <li><a href="#"  onclick='reportform()'>报警数据报表</a></li>
+      </ul>
+    </div>
+  </div>
+  <div style="display: inline-block;">
+    <div id = "search" class="table-a"  style="margin-left: 30px;margin-right: 30px; width:100%">
+      <input type="text" class="form-coa form-control" placeholder="日期时间" id="test6" style="width: 300px;">
+      <div class="dropdown">
+        <button class="form-coa coa"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="detectionArea">监测区域</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dLabel" id="jianc">
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button  class="form-coa coa" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="alarmSystem" >报警系统</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dLabel" id="baox">
+        </ul>
+      </div>
+      <div class="dropdown">
+        <button class="form-coa coa"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="alarmType" >报警类型</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dLabel" id="baolei">
+        </ul>
+      </div>
+      <input type="text" class="form-coa form-control" placeholder="设备编码"  id="equipmentNumber">
+      <input type="text" class="form-coa form-control" placeholder="设备名称"  id="alarmEquipment">
+      <button  class="bbnta " onclick="search()">查询</button>
+    </div>
+  </div>
+
+  <div style="margin-left: 30px;margin-right: 30px;">
+    <table id="tableaaa"  class="table" >
+      <thead class="thead-nan">
+      <tr>
+        <td style="width: 45px;">序号</td>
+        <td>发生时间</td>
+        <td style="width: 45px;">状态</td>
+        <td>监测区域</td>
+        <td>报警系统</td>
+        <td style="width: 72px;">报警类型</td>
+        <td>报警设备</td>
+        <!-- <td>报警读数</td> -->
+        <td style="width: 72px;">报警级别</td>
+        <td>设备位置</td>
+        <td>报警内容</td>
+        <td>确认备注</td>
+        <td>确认时间</td>
+        <td>操作</td>
+      </tr>
+      </thead>
+        <tbody id="tbody" class="tbody-wa">
+        </tbody>
+    </table>
+  </div>
+  
+  <div id="sendasda" style="margin-left: 30px;margin-right: 30px;">
+    <div id="pagesaadas" style="display: inline-block;height: 76px;display: inline-block;line-height: 76px;position: relative; top: -29px;margin-left: 10px;margin-right: 10px; color: #b2e5ff;">
+    </div>
+    <div class="dropup" style="width: 100px;position: relative; top:-30px; margin-left: 10px;margin-right: 10px;">
+      <button style="width: 100px;color: #fff;border: 1px solid #074b73;outline: 0;" class="form-coa coa"  type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span id="pagesizea">20条/页</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dLabel" >
+        <li><a href='#'  onclick='changePgaesize(10)'>10条/页</a></li>
+        <li><a href='#'  onclick='changePgaesize(20)'>20条/页</a></li>
+        <li><a href='#'  onclick='changePgaesize(40)'>40条/页</a></li>
+        <li><a href='#'  onclick='changePgaesize(100)'>100条/页</a></li>
+      </ul>
+    </div>
+    <nav aria-label="Page navigation" style="display: inline-block;color: #4c628a;">
+      <ul class="pagination pagination-sm" id="page">
+      </ul>
+    </nav>
+    <div style="display: inline-block;position:relative;top: -30px;color: #074b73;" >
+      <span class="el-pagination__jump">前往
+        <div class="el-input el-pagination__editor is-in-pagination">
+          <input style="width: 40px;" id="applyCertNum" type="text"  class="el-input__inner">
+        </div>页
+      </span>
+    </div>
+    <button id="allupdate" style="float: right;position: relative;top: 0px;right: 30px;width: 70px;" onclick='allUpdate()' class='bbnta' data-toggle='modal' data-target='#updateModal'  type="button" class="bbnt">批量确认</button>
+  </div>
+
+
+  <div class="pull-left pagination-detail"><span class="pagination-info" id="info"></span></div>
+  <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">确认报警</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">备注</label>
+              <div class="col-sm-10">
+                <textarea style="width: 100%;" rows="3" cols="20" class="form-control form-coa" id="inputEmail3" ></textarea>
+              </div>
+            </div>
+          </form>
+          <div class="btn-box">
+            <button  class="bbnta" onclick="checkUser()">提交</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">查看详情</h4>
+        </div>
+        <div class="modal-body">
+          <table  class="table table-bordered">
+            <thead>
+            <tr>
+              <td >属性</td>
+              <td>值</td>
+            </tr>
+            </thead>
+            <tbody  id="model-b"></tbody>
+          </table>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="bbnta" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary"></button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="adaModal" tabindex="-1" role="dialog" aria-labelledby="adaModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="adaModalLabel">故障报修</h4>
+        </div>
+        <div class="modal-body" id="mmmoddd-boy">
+
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="bbnta" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary"></button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:20px;margin-left: 30px;margin-right: 30px;" id="StatisticsList"> 
+    <div  id="chartmain" style="width:1020px; height: 430px;display: inline-block;float:left;"></div>
+    <div style="float:right;border:1px solid #263245;height:327px;width: 610px;margin-right: 120px;margin-top:40px;">
+      <div id="chartpie" style="width:600px; height: 250px;margin-top:35px;"></div>
+    </div>
+    <div  style="width:100%;margin-top:33px;margin-bottom: 9px;float:right;">
+      <button  style="width:51px;height:24px;float:right;;margin-right:12px ;"  class="bbnta" onclick="checkUser()">提交</button> 
+      <img style="width:51px;height:24px;float:right;;margin-right:12px ;" src="./img/pic002.png" alt=""></div> 
+    <table id="tableaaa1"  class="table">
+      <thead class="thead-nan">
+      <tr>
+        <td style="width: 70px;">编号</td>
+        <td>分控</td>
+        <td>1月</td>
+        <td>2月</td>
+        <td>3月</td>
+        <td>4月</td>
+        <td>5月</td>
+        <td>6月</td>
+      </tr>
+      </thead>
+        <tbody id="tbody1a" class="tbody-wa">
+        </tbody>
+    </table>
+  </div>
+  <div id="reportformList">
+
+  </div>
+</div>
+</body>
+<script>
+  var a = 25 ^ 3
+  console.log(a)
+  var pagesize = 20
+  function changePgaesize(adaad){
+    $("#pagesizea").html(adaad+'条/页')
+    pagesize = adaad
+    console.log(pagesize)
+    if(tipe === 1){
+      loadlist()
+    }else if(tipe === 2){
+      waitConfirm()
+    }else if(tipe === 3){
+      activelist()
+    }else if(tipe === 4){
+      search()
+    }
+  }
+  window.alert =alert;
+  function alert(e){
+    $("body").append('<div id="msg"><div id="msg_top">信息<span class="msg_close">×</span></div><div id="msg_cont">'+e+'</div><div class="bbnta" id="msg_clear">确定</div></div>');
+    $("#msg_clear").click(function (){
+      $("#msg").remove();
+    });
+    $(".msg_close").click(function (){
+      $("#msg").remove();
+    });
+  }
+  setInterval(function(){
+    var html = moment().format('YYYY年MM月DD日 HH:mm:ss')
+    $('#headdate').html(html);
+  }, 1000);
+  var total = 1
+  var pages = 1
+  var a = ""
+  var b=""
+  if(window.location.host === "171.221.172.161:7008"){
+    a = "171.221.172.162"
+    b= "171.221.172.161"
+  }else if(window.location.host === "10.1.235.225:7008"){
+    a = "10.1.237.27"
+    b= "10.1.235.225"
+  }else if(window.location.host === "172.25.61.14:7008"){
+    a = "172.25.61.11"
+    b= "172.25.61.14"
+  }
+  // var ws = new WebSocket('ws://'+ a +':7000/api/rtmsg/topic/video/ffd96859f69b4f65bdeb04d6e69c9179.e11e71467d1e42a2a906a8d1c6212301');
+  // var was = new WebSocket('ws://'+ a +':7000/api/rtmsg/topic/map/ffd96859f69b4f65bdeb04d6e69c9179.e11e71467d1e42a2a906a8d1c6212301');
+  // var wass = new WebSocket('ws://'+ b +':7008/alarm/websocket/'+moment().valueOf());
+
+  // var ws = new WebSocket('ws://128.10.9.101:8555/api/rtmsg/topic/video/ffd96859f69b4f65bdeb04d6e69c9179.e11e71467d1e42a2a906a8d1c6212301');
+  // var was = new WebSocket('ws://128.10.9.101:8555/api/rtmsg/topic/map/ffd96859f69b4f65bdeb04d6e69c9179.e11e71467d1e42a2a906a8d1c6212301');
+  // var wass = new WebSocket('ws://localhost:7008/alarm/websocket/'+moment().valueOf());
+
+  function sendWebsoct (adaa,adasss){
+    console.log(adaa)
+    ws.send( "play:"+ adaa);
+    was.send(adasss);
+  }
+  var tabledata = []
+  var tid=""
+  var tipe = ''
+  if(localStorage.getItem("tipe") ){
+    tipe = parseInt(localStorage.getItem("tipe"))
+
+  }else{
+    tipe =  1;
+  }
+  console.log(typeof tipe)
+
+  function previous (){
+    console.log($('#'+total))
+
+    if(parseInt(total ) > 1){
+      total = parseInt(total )- 1
+    }else{
+      total = 1
+    }
+    if(tipe === 1){
+      loadlist()
+    }else if(tipe === 2){
+      waitConfirm()
+    }else if(tipe === 3){
+      activelist()
+    }else if(tipe === 4){
+      search()
+    }
+    $('#'+total).addClass('hoverli')
+  }
+
+  function pageOn(adsssa){
+    total = adsssa
+    if(tipe === 1){
+      loadlist()
+    }else if(tipe === 2){
+      waitConfirm()
+    }else if(tipe === 3){
+      activelist()
+    }else if(tipe === 4){
+      search()
+    }
+    $('#'+adsssa).addClass('hoverli')
+  }
+  function next (){
+    console.log($('#'+total))
+    if(parseInt(total ) < pages){
+      total = parseInt(total ) + 1
+    }else{
+      total = pages
+    }
+    if(tipe === 1){
+      loadlist()
+    }else if(tipe === 2){
+      waitConfirm()
+    }else if(tipe === 3){
+      activelist()
+    }else if(tipe === 4){
+      search()
+    }
+    $('#'+total).addClass('hoverli')
+  }
+  function clear (){
+    document.getElementById("test6").value ='';
+    console.log(document.getElementById("test6").value)
+    $('#search').hide();
+  }
+  function activelist(){
+    let a = {pageNo:total,pageSize:pagesize}
+    $.ajax({
+      url:"/alarm/just/findByList",
+      type:'get',
+      data:a,
+      dataType:'json',
+      success:function (data) {
+        tabledata = data.data.list
+        var html="";
+        if(data.data.total === 0){
+          $('#sendasda').hide();
+        }
+        var htmls = "共有"+ data.data.pages +"页"
+        $('#pagesaadas').html(htmls);
+        pages = data.data.pages
+        data.data.list.map((v,index)=>{
+          v.pm = (total-1) * parseInt(pagesize) +v.pm
+
+          if(v.confirmTime === null){
+          if(v.alarmSystem === "监控与报警系统"){
+            if(v.alarmLevel === "高"){
+              html+="<tr style='background-color:#b23636;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td  style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button><button onclick='showup("+ v.id +")' class='bbnta wite'  data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }else if(v.alarmLevel === "中"){
+              html+="<tr style='background-color:#a65839;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td>><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button><button onclick='showup("+ v.id +")' class='bbnta wite' data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }else{
+              html+="<tr style='background-color:#a68b39;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button><button onclick='showup("+ v.id +")' class='bbnta wite' data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }
+          }else{
+            if(v.alarmLevel === "高"){
+              html+="<tr style='background-color:#b23636;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button></td></tr>";
+            }else if(v.alarmLevel === "中"){
+              html+="<tr style='background-color:#a65839;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button></td></tr>";
+
+            }else{
+              html+="<tr style='background-color:#a68b39;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta wite' >移除</button></td></tr>";
+
+            }
+          }
+        }else{
+          if(v.alarmSystem === "监控与报警系统"){
+            if(v.alarmLevel === "高"){
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='red' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button><button onclick='showup("+ v.id +")' class='bbnta' data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }else if(v.alarmLevel === "中"){
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='yellow' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button><button onclick='showup("+ v.id +")' class='bbnta' data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }else{
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='green' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button><button onclick='showup("+ v.id +")' class='bbnta' data-toggle='modal' data-target='#adaModal' >保修</button></td></tr>";
+
+            }
+          }else{
+            if(v.alarmLevel === "高"){
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='red' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button></td></tr>";
+
+            }else if(v.alarmLevel === "中"){
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='yellow' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button></td></tr>";
+
+            }else{
+              html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='green' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='deletea("+ v.id +")'  class='bbnta' >移除</button></td></tr>";
+
+            }
+
+          }}
+      })
+        var htmls =''
+        htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+        pages = parseInt(pages)
+        console.log(total)
+        if(pages > 5){
+          if(pages === total){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total < 3){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li onclick='pageOn(2)' id='2'><a>2</a></li>"
+            htmls+="<li onclick='pageOn(3)' id='3'><a>3</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= 3 && total < (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(total-1)+")' id='"+(total-1)+"'><a>"+(total-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+total+")' id='"+total+"'><a>"+total+"</a></li>"
+            htmls+="<li onclick='pageOn("+(total+1)+")' id='"+(total +1)+"'><a>"+(total+1)+"</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }
+        }else{
+          for(var i=1;i<=pages;i++){
+            htmls+="<li onclick='pageOn("+i+")' id='"+i+"'><a>"+i+"</a></li>"
+          }
+        }
+        htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+        $('#page').html(htmls);
+        $('#tbody').html(html);
+      }
+    });
+  }
+  //监测区域查询
+  function getDetectionArea(){
+    $.ajax({
+      url:"/alarm/alarms/getDetectionArea",
+      type:'get',
+      dataType:'json',
+      success:function (data) {
+        tabledata = data.data
+        var html="<li><a href='#'  onclick='areaData()'>全部</a></li>";
+        data.data.map((v,index)=>{
+          html+="<li><a href='#'  onclick='areaData("+JSON.stringify(v)+")'>"+ v+"</a></li>";
+      })
+        $('#jianc').html(html);
+      }
+    });
+  }
+  function areaData(ccc){
+    if(ccc===undefined){
+      $("#detectionArea").html("全部")
+    }else{
+      $("#detectionArea").html(ccc)
+    }
+  }
+  function getAlarmSystem(){
+    $.ajax({
+      url:"/alarm/alarms/getAlarmSystem",
+      type:'get',
+      dataType:'json',
+      success:function (data) {
+        tabledata = data.data
+        var html="<li><a href='#'  onclick='alarmData()'>全部</a></li>";
+        data.data.map((v,index)=>{
+          html+="<li><a href='#'  onclick='alarmData("+JSON.stringify(v)+")'>"+ v+"</a></li>";
+      })
+        $('#baox').html(html);
+      }
+    });
+  }
+  function alarmData(ccc){
+    if(ccc===undefined){
+      $("#alarmSystem").html("全部")
+    }else{
+      $("#alarmSystem").html(ccc)
+    }
+  }
+
+  function getAlarmType(){
+
+    $.ajax({
+      url:"/alarm/alarms/getAlarmType",
+      type:'get',
+      dataType:'json',
+      success:function (data) {
+        tabledata = data.data
+        var html="<li><a href='#'  onclick='typeData()'>全部</a></li>";
+        data.data.map((v,index)=>{
+          html+="<li><a href='#'  onclick='typeData("+JSON.stringify(v)+")'>"+ v+"</a></li>";
+      })
+        $('#baolei').html(html);
+      }
+    });
+  }
+  function typeData(ccc){
+    if(ccc===undefined){
+      $("#alarmType").html("全部")
+    }else{
+      $("#alarmType").html(ccc)
+    }
+  }
+  function search(){
+    let a = {
+      pageNo:total,
+      pageSize:pagesize,
+      startTime :document.getElementById('test6').value.slice(0,19),
+      endTime : document.getElementById('test6').value.slice(22,44),
+      detectionArea : document.getElementById('detectionArea').innerText ==="监测区域" ? '' : document.getElementById('detectionArea').innerText ==="全部"? '': document.getElementById('detectionArea').innerText ,
+      alarmSystem : document.getElementById('alarmSystem').innerText ==="报警系统" ? '' :  document.getElementById('alarmSystem').innerText ==="全部"? '':document.getElementById('alarmSystem').innerText,
+      alarmType : document.getElementById('alarmType').innerText ==="报警类型" ? '' :  document.getElementById('alarmType').innerText ==="全部"? '': document.getElementById('alarmType').innerText,
+      equipmentNumber : document.getElementById('equipmentNumber').value,
+      alarmEquipment : document.getElementById('alarmEquipment').value
+    }
+    console.log(a)
+    $.ajax({
+      url:"/alarm/alarms/findByList",
+      type:'get',
+      dataType:'json',
+      data:a,
+      success:function (data) {
+        var htmls = "共有"+ data.data.pages +"页"
+        $('#pagesaadas').html(htmls);
+        tabledata = data.data.list
+        pages = data.data.pages
+        var html="";
+        if(data.data.total === 0){
+          $('#sendasda').hide();
+        }
+        data.data.list.map((v,index)=>{
+          v.pm = (total-1) * parseInt(pagesize) +v.pm
+          if(v.confirmTime === null){
+          if(v.alarmLevel === "高"){
+
+            html+="<tr style='background-color:#b23636;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id + ")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</td></tr>";
+
+          }else if(v.alarmLevel === "中"){
+
+            html+="<tr style='background-color:#a65839;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id + ")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</td></tr>";
+
+          }else{
+
+            html+="<tr style='background-color:#a68b39;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id + ")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</td></tr>";
+
+          }  }else{
+          if(v.alarmLevel === "高"){
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='red' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }else if(v.alarmLevel === "中"){
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='yellow' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }else{
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='green' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }
+        }
+      })
+        var htmls =''
+        htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+        pages = parseInt(pages)
+        console.log(total)
+        if(pages > 5){
+          if(pages === total){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total < 3){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li onclick='pageOn(2)' id='2'><a>2</a></li>"
+            htmls+="<li onclick='pageOn(3)' id='3'><a>3</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= 3 && total < (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(total-1)+")' id='"+(total-1)+"'><a>"+(total-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+total+")' id='"+total+"'><a>"+total+"</a></li>"
+            htmls+="<li onclick='pageOn("+(total+1)+")' id='"+(total +1)+"'><a>"+(total+1)+"</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }
+        }else{
+          for(var i=1;i<=pages;i++){
+            htmls+="<li onclick='pageOn("+i+")' id='"+i+"'><a>"+i+"</a></li>"
+          }
+        }
+        htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+        $('#page').html(htmls);
+        $('#tbody').html(html);
+      }
+    });
+  }
+  function loadlist(){
+    let a = {pageNo:total,pageSize:pagesize}
+    $.ajax({
+      url:"/alarm/alarms/findByList",
+      type:'get',
+      dataType:'json',
+      data:a,
+      success:function (data) {
+        var htmls = "共有"+ data.data.pages +"页"
+        $('#pagesaadas').html(htmls);
+        tabledata = data.data.list
+        var html="";
+        pages = data.data.pages
+        if(data.data.total === 0){
+          $('#sendasda').hide();
+        }
+        data.data.list.map((v,index)=>{
+          v.pm = (total-1) * parseInt(pagesize) +v.pm
+          if(v.confirmTime === null){
+          if(v.alarmLevel === "高"){
+            html+="<tr style='background-color:#b23636;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }else if(v.alarmLevel === "中"){
+            html+="<tr style='background-color:#a65839;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }else{
+            html+="<tr style='background-color:#a68b39;color:#fff;' ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }
+        }else{
+          if(v.alarmLevel === "高"){
+            html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='red' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }else if(v.alarmLevel === "中"){
+            html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='yellow' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }else{
+            html+="<tr ondblclick='sendWebsoct( " + JSON.stringify(v.cabinCode) +","+JSON.stringify(v.equipmentNumber)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='green' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }
+        }
+      })
+        var htmls =''
+        htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+        pages = parseInt(pages)
+        console.log(total)
+        if(pages > 5){
+          if(pages === total){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total < 3){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li onclick='pageOn(2)' id='2'><a>2</a></li>"
+            htmls+="<li onclick='pageOn(3)' id='3'><a>3</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= 3 && total < (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(total-1)+")' id='"+(total-1)+"'><a>"+(total-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+total+")' id='"+total+"'><a>"+total+"</a></li>"
+            htmls+="<li onclick='pageOn("+(total+1)+")' id='"+(total +1)+"'><a>"+(total+1)+"</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }
+        }else{
+          for(var i=1;i<=pages;i++){
+            htmls+="<li onclick='pageOn("+i+")' id='"+i+"'><a>"+i+"</a></li>"
+          }
+        }
+        htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+        $('#page').html(htmls);
+        $('#tbody').html(html);
+      }
+    });
+  }
+  function waitConfirm(){
+    let a = {pageNo:total,pageSize:pagesize}
+    $.ajax({
+      url:"/alarm/alarms/waitConfirm",
+      type:'get',
+      data:a,
+      dataType:'json',
+      success:function (data) {
+        var htmls = "共有"+ data.data.pages +"页"
+        $('#pagesaadas').html(htmls);
+        tabledata = data.data.list
+        var html="";
+        pages = data.data.pages
+        if(data.data.total === 0){
+          $('#sendasda').hide();
+        }
+        data.data.list.map((v,index)=>{
+          v.pm = (total-1) * parseInt(pagesize) +v.pm
+          if(v.confirmTime === null){
+          if(v.alarmLevel === "高"){
+            html+="<tr style='background-color:#b23636;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }else if(v.alarmLevel === "中"){
+            html+="<tr style='background-color:#a65839;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }else{
+            html+="<tr style='background-color:#a68b39;color:#fff;' ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td style='width: 72px;'> "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td></td><td></td><td ><button onclick='look("+ v.id +")'  class='bbnta wite' data-toggle='modal' data-target='#myModal'>查看</button><button onclick='update("+ v.id+")' class='bbnta wite' data-toggle='modal' data-target='#updateModal'>确认</button></td></tr>";
+
+          }
+        }else{
+          if(v.alarmLevel === "高"){
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td></td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='red' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+
+          }else if(v.alarmLevel === "中"){
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td></td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='yellow' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+
+          }else{
+            html+="<tr ondblclick='sendWebsoct("+ JSON.stringify(v.cabinCode) +","+ JSON.stringify(v.id)  +")'><td style='width: 45px;'>"+v.pm+"</td><td>"+v.occurrenceTime+"</td><td style='width: 45px;'>"+v.status+"</td></td><td>"+v.detectionArea+"</td><td>"+v.alarmSystem+"</td><td style='width: 72px;'>"+v.alarmType+"</td><td>"+v.alarmEquipment+"</td><td class='green' style='width: 72px;'>  "+v.alarmLevel+"</td><td >"+v.deviceLocation+"</td><td >"+v.alarmMsg+"</td><td>"+v.confirmRemarks+"</td><td>"+v.confirmTime+"</td><td ><button onclick='look("+ v.id +")'  class='bbnta' data-toggle='modal' data-target='#myModal'>查看</button></td></tr>";
+
+          }
+        }
+      })
+        var htmls =''
+        htmls ="<li><a onclick='previous()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>"
+        pages = parseInt(pages)
+        console.log(total)
+        if(pages > 5){
+          if(pages === total){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total < 3){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li onclick='pageOn(2)' id='2'><a>2</a></li>"
+            htmls+="<li onclick='pageOn(3)' id='3'><a>3</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= 3 && total < (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(total-1)+")' id='"+(total-1)+"'><a>"+(total-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+total+")' id='"+total+"'><a>"+total+"</a></li>"
+            htmls+="<li onclick='pageOn("+(total+1)+")' id='"+(total +1)+"'><a>"+(total+1)+"</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }else if(total >= (pages -3)){
+            htmls+="<li onclick='pageOn(1)' id='1'><a>1</a></li>"
+            htmls+="<li ><a>...</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-3)+")' id='"+(pages-3)+"'><a>"+(pages-3)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-2)+")' id='"+(pages-2)+"'><a>"+(pages-2)+"</a></li>"
+            htmls+="<li onclick='pageOn("+(pages-1)+")' id='"+(pages-1)+"'><a>"+(pages-1)+"</a></li>"
+            htmls+="<li onclick='pageOn("+pages+")' id='"+pages+"'><a>"+pages+"</a></li>"
+          }
+        }else{
+          for(var i=1;i<=pages;i++){
+            htmls+="<li onclick='pageOn("+i+")' id='"+i+"'><a>"+i+"</a></li>"
+          }
+        }
+        htmls+="<li><a onclick='next()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>"
+        $('#page').html(htmls);
+        $('#tbody').html(html);
+      }
+    });
+  }
+
+  $(function () {
+    $('#'+total).addClass('hoverli')
+    $('#applyCertNum').bind('keypress',function(event){
+      if(event.keyCode == 13)
+      {  if(parseInt(total ) < pages){
+        total = $('#applyCertNum').val()}
+        document.getElementById("applyCertNum").value =''
+        if(tipe === 1){
+          loadlist()
+        }else if(tipe === 2){
+          waitConfirm()
+        }else if(tipe === 3){
+          activelist()
+        }else if(tipe === 4){
+          search()
+        }
+      }
+    });
+    console.log(tipe)
+    if(tipe === 1){
+      $('#allupdate').show()
+      $('#all').addClass('active')
+      $('#before').removeClass('active')
+      $('#begin').removeClass('active')
+      $('#after').removeClass('active')
+      loadlist()
+    }else if(tipe === 2){
+      $('#allupdate').show()
+      $('#before').addClass('active')
+      $('#all').removeClass('active')
+      $('#begin').removeClass('active')
+      $('#after').removeClass('active')
+      waitConfirm()
+    }else if(tipe === 3){
+      $('#allupdate').hide()
+      $('#begin').addClass('active')
+      $('#all').removeClass('active')
+      $('#before').removeClass('active')
+      $('#after').removeClass('active')
+      activelist()
+    }else if(tipe === 4){
+      $('#allupdate').hide()
+      $('#begin').removeClass('active')
+      $('#all').removeClass('active')
+      $('#before').removeClass('active')
+      $('#after').addClass('active')
+      getDetectionArea()
+      getAlarmSystem()
+      getAlarmType()
+
+      tipe = 4
+      total=1
+      localStorage.setItem("tipe", 4);
+      $('#search').show();
+      loadlist()
+      lay('#version').html('-v'+ laydate.v);
+      laydate.render({
+        elem: '#test6'
+        ,type: 'datetime'
+        ,range: true
+      });
+    }
+    $('#updateModal').on('hidden.bs.modal', function (e) {
+      document.getElementById("inputEmail3").value = ""
+      document.getElementById("date1").value = ''
+    })
+    $('#all').click(function () {
+      console.log(1)
+      tipe = 1
+      total=1
+      $('#StatisticsList').hide()
+  $('#reportformList').hide()
+  $('#Statistics').hide()
+      $('#all').addClass('active')
+      $('#'+total).addClass('hoverli')
+      $('#before').removeClass('active')
+      $('#tableaaa').show()
+      $('#begin').removeClass('active')
+      $('#after').removeClass('active')
+      $('#allupdate').show()
+      $('#sendasda').show();
+      localStorage.setItem("tipe", 1);
+      clear()
+      loadlist()
+
+    });
+    $('#before').click(function () {
+      tipe = 2
+      total=1
+      $('#StatisticsList').hide()
+  $('#reportformList').hide()
+  $('#Statistics').hide()
+      $('#sendasda').show();
+      $('#before').addClass('active')
+      $('#all').removeClass('active')
+      $('#begin').removeClass('active')
+      $('#'+total).addClass('hoverli')
+      $('#tableaaa').show()
+      $('#after').removeClass('active')
+      $('#allupdate').show()
+      localStorage.setItem("tipe", 2);
+      clear()
+      waitConfirm()
+    });
+    $('#begin').click(function () {
+      tipe = 3
+      total=1
+      $('#StatisticsList').hide()
+  $('#reportformList').hide()
+  $('#Statistics').hide()
+      $('#sendasda').show();
+      $('#begin').addClass('active')
+      $('#all').removeClass('active')
+      $('#tableaaa').show()
+      $('#before').removeClass('active')
+      $('#after').removeClass('active')
+      $('#allupdate').hide()
+      $('#'+total).addClass('hoverli')
+      localStorage.setItem("tipe", 3);
+      clear()
+      activelist()
+
+    });
+    $('#after').click(function () {
+      getDetectionArea()
+      getAlarmSystem()
+      getAlarmType()
+      $('#StatisticsList').hide()
+  $('#reportformList').hide()
+  $('#Statistics').hide()
+  $('#tableaaa').show()
+      $('#sendasda').show();
+      $('#begin').removeClass('active')
+      $('#all').removeClass('active')
+      $('#before').removeClass('active')
+      $('#after').addClass('active')
+      $('#allupdate').hide()
+      $('#'+total).addClass('hoverli')
+      tipe = 4
+      total=1
+      localStorage.setItem("tipe", 4);
+      $('#search').show();
+      loadlist()
+
+      lay('#version').html('-v'+ laydate.v);
+      laydate.render({
+        elem: '#test6'
+        ,type: 'datetime'
+        ,range: true
+      });
+    });
+    $('#tong').click(function () {
+      tipe = 5
+      total=1
+      localStorage.setItem("tipe", 5);
+      clear()
+    });
+    wass.onmessage = function(event) {
+      console.log(event.data)
+      if(tipe === 1){
+        loadlist()
+      }else if(tipe === 2){
+        waitConfirm()
+      }else if(tipe === 3){
+        activelist()
+      }else if(tipe === 4){
+        search()
+      }
+    };
+  });
+  function deletea(ada){
+    var a = {id:""}
+    tabledata.map(v=>{
+      if(parseInt(v.id) === parseInt(ada)){
+      a.id = v.id
+    }
+  })
+    $.ajax({
+      url:"/alarm/just/delete?id="+a.id,
+      type:'delete',
+      data:JSON.stringify(a),
+      contentType : "application/json",
+      dataType:'json',
+      success:function (data) {
+        alert("移除成功")
+        activelist()
+      }
+    });
+  }
+  function look(ada){
+    var a = {id:""}
+    tabledata.map(v=>{
+      if(parseInt(v.id) === parseInt(ada)){
+      a.id = v.id
+    }
+  })
+    $.ajax({
+      url:"/alarm/alarms/findById",
+      type:'get',
+      data:a,
+      dataType:'json',
+      success:function (data) {
+        var v = data.data
+        var html="";
+        if(v.confirmTime === null) {
+          html += " <tr><td>发生时间</td><td>" + v.occurrenceTime + "</td></tr><tr><td>监测区域</td><td>" + v.detectionArea + "</td></tr><tr><td>报警系统</td><td>" + v.alarmSystem + "</td></tr><tr><td>报警类型</td><td>" + v.alarmType + "</td></tr><tr><td>报警设备</td><td>" + v.alarmEquipment + "</td></tr><tr><td>设备编号</td><td>" + v.equipmentNumber + "</td></tr><tr><td>报警读数</td><td>" + v.alarmReading + "</td></tr><tr><td>报警级别</td><td>" + v.alarmLevel + "</td></tr><tr><td>设备位置</td><td>" + v.deviceLocation + "</td></tr><tr><td>报警内容</td><td>" + v.alarmMsg + "</td></tr><tr><td>确认备注</td><td>" + v.confirmRemarks + "</td></tr><tr><td>确认时间</td><td></td></tr><tr><td>系统来源</td><td>" + v.sourceSystem + "</td></tr>";
+        }else{
+          html += " <tr><td>发生时间</td><td>" + v.occurrenceTime + "</td></tr><tr><td>监测区域</td><td>" + v.detectionArea + "</td></tr><tr><td>报警系统</td><td>" + v.alarmSystem + "</td></tr><tr><td>报警类型</td><td>" + v.alarmType + "</td></tr><tr><td>报警设备</td><td>" + v.alarmEquipment + "</td></tr><tr><td>设备编号</td><td>" + v.equipmentNumber + "</td></tr><tr><td>报警读数</td><td>" + v.alarmReading + "</td></tr><tr><td>报警级别</td><td>" + v.alarmLevel + "</td></tr><tr><td>设备位置</td><td>" + v.deviceLocation + "</td></tr><tr><td>报警内容</td><td>" + v.alarmMsg + "</td></tr><tr><td>确认备注</td><td>" + v.confirmRemarks + "</td></tr><tr><td>确认时间</td><td>" + v.confirmTime + "</td></tr><tr><td>系统来源</td><td>" + v.sourceSystem + "</td></tr>";
+        }
+        $('#model-b').html(html);
+      }
+    });
+  }
+  function update(ada){
+    var a = {id:""}
+    tabledata.map(v=>{
+      if(parseInt(v.id) === parseInt(ada)){
+      tid = v.id
+    }
+  })
+  }
+  function allUpdate(){
+    var a = []
+    tabledata.map(v=>{
+      a.push(v.id)
+    })
+    tid = a
+  }
+  function  showup(ada){
+    console.log(ada)
+    var html=''
+    var a = {id:""}
+    tabledata.map(v=>{
+      if(parseInt(v.id) === parseInt(ada)){
+      /*html =  "<iframe width='570' height='400' src='http://128.10.25.50:80/Admin/Public/monitor?tagname="+ v.equipmentNumber + "'></iframe>"*/
+    }
+  })
+    console.log(html)
+    $('#mmmoddd-boy').html(html);
+  }
+  window.onbeforeunload = onbeforeunload_handler;
+  window.onunload = onunload_handler;
+</script>
+<script src="./js/work.js"></script>
+</html>
